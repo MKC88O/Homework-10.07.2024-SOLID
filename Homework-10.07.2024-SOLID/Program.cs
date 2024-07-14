@@ -91,9 +91,14 @@
     {
         public Group? Group { get; set; }
         public Performance? Performance { get; set; }
-        public Address? HomeAddress { get; set; }
+        public StudentOtherInfo? StudentOtherInfo { get; set; }
     }
 
+    public class StudentOtherInfo
+    {
+        public Address? HomeAddress { get; set; }
+        public string? ZnakZodiaka { get; set; }
+    }
     internal class Program
     {
         static void Main(string[] args)
@@ -125,14 +130,20 @@
                 PerformanceExam = performanceExam, PerformanceZachet = performanceZachet, TotalAverageRate = (performanceHomeworks.DzAverageRate + 
                 performancePractice.PracticeAverageRate + performanceExam.ExamAverageRate + performanceZachet.ZachetAverageRate) / (float)4 };
 
+            StudentOtherInfo studentOtherInfo = new() { HomeAddress = address, ZnakZodiaka = "Скорпион" };
+
             Student student = new () { FirstName = "Иванов", Surname = "Иван", Lastname = "Иванович", DateOfBirth = new DateOnly(2001, 01, 01), 
-                HomeAddress = address, Group = group, Performance = performance};
+                 Group = group, Performance = performance, StudentOtherInfo = studentOtherInfo};
+
 
             Console.WriteLine("Студент: \t" + student.FirstName + " " + student.Surname + " " + student.Lastname);
             Console.WriteLine("Дата рождения: \t" + student.DateOfBirth);
-            Console.WriteLine("Домашний адрес:\t улица " + student.HomeAddress.Street + ", " + student.HomeAddress.HouseNumber + student.HomeAddress.Korpus +
-                ", " + student.HomeAddress.City?.CityName + ", " + student.HomeAddress.City?.Region?.RegionName + ", " + student.HomeAddress.City?.Country?.CountryName +
-                ", " + student.HomeAddress.PostalCode);
+            Console.WriteLine("Домашний адрес:\t улица " + student.StudentOtherInfo.HomeAddress.Street + ", " + student.StudentOtherInfo.HomeAddress.HouseNumber + 
+                student.StudentOtherInfo.HomeAddress.Korpus + ", " + student.StudentOtherInfo.HomeAddress.City?.CityName + ", " + 
+                student.StudentOtherInfo.HomeAddress.City?.Region?.RegionName + ", " + student.StudentOtherInfo.HomeAddress.City?.Country?.CountryName +
+                ", " + student.StudentOtherInfo.HomeAddress.PostalCode);
+
+            Console.WriteLine("Знак зодиака: \t" + student.StudentOtherInfo.ZnakZodiaka);
             Console.WriteLine("Группа: \t" + student.Group.GroupName);
             Console.WriteLine("Специализация: \t" + student.Group.Specialization);
             Console.WriteLine("Дисциплина: \t" + group.Discipline?.SubjectName);
@@ -141,11 +152,11 @@
             Console.WriteLine("\tПосещено занятий: \t" + group.Discipline?.Attendance.LessonsVisited);
             Console.WriteLine("\tОпозданий: \t\t" + group.Discipline?.Attendance.LessonsLate);
             Console.WriteLine("Успеваемость: ");
-            Console.WriteLine("\tДомашние задания: \t" + student.Performance.PerformanceHomeWorks.DzAverageRate);
-            Console.WriteLine("\tПрактика: \t\t" + student.Performance.PerformancePractice.PracticeAverageRate);
-            Console.WriteLine("\tЭкзамены: \t\t" + student.Performance.PerformanceExam.ExamAverageRate);
-            Console.WriteLine("\tЗачеты: \t\t" + student.Performance.PerformanceZachet.ZachetAverageRate);
-            Console.WriteLine("\tОбщий Средний балл: \t" + student.Performance.TotalAverageRate);
+            Console.WriteLine("\tДомашние задания: \t" + Math.Round(student.Performance.PerformanceHomeWorks.DzAverageRate, 2));
+            Console.WriteLine("\tПрактика: \t\t" + Math.Round(student.Performance.PerformancePractice.PracticeAverageRate, 2));
+            Console.WriteLine("\tЭкзамены: \t\t" + Math.Round(student.Performance.PerformanceExam.ExamAverageRate, 2));
+            Console.WriteLine("\tЗачеты: \t\t" + Math.Round(student.Performance.PerformanceZachet.ZachetAverageRate, 2));
+            Console.WriteLine("\tОбщий Средний балл: \t" + Math.Round(student.Performance.TotalAverageRate, 2));
         }    
     }
 }
