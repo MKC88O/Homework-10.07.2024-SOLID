@@ -43,16 +43,17 @@
         public Discipline? Discipline { get; set; }
     }
 
-    public class Discipline
-    {
-        public string? TeacherName { get; set; }
-        public string? SubjectName { get; set; }
-    }
-
     public class Attendance
     {
         public int LessonsVisited { get; set; }
         public int LessonsLate { get; set; }
+    }
+
+    public class Discipline
+    {
+        public string? TeacherName { get; set; }
+        public string? SubjectName { get; set; }
+        public Attendance? Attendance { get; set; }
     }
 
     public class PerformanceHomeWorks
@@ -105,24 +106,24 @@
 
             Address address = new () { City = city, Street = "Болгарская", HouseNumber = 87, Korpus = 'A', PostalCode = 6509 };
 
-            Discipline discipline = new() { TeacherName = "Александр Дмитриевич", SubjectName = ".Net Framework" };
+            Attendance attendance = new() { LessonsVisited = 90, LessonsLate = 2 };
+
+            Discipline discipline = new() { TeacherName = "Александр Дмитриевич", SubjectName = ".Net Framework", Attendance = attendance };
 
             Group group = new () { GroupName = "ПВ312", Specialization = "Разработчик програмного обеспечения", StudentsCount = 6, 
                 StartDate = new DateOnly(2023, 11, 20), Kurs = 1, Discipline = discipline };
 
-            Attendance attendance = new () { LessonsVisited = 90, LessonsLate = 2 };
+            PerformanceHomeWorks performanceHomeworks = new () { DzRates = [ 12, 11, 10 ], DzAverageRate = (12 + 11 + 10) / (float)3 };
 
-            PerformanceHomeWorks performanceHomeworks = new () { DzRates = [ 12, 11, 10 ], DzAverageRate = (12 + 11 + 10) / 3};
+            PerformancePractice performancePractice = new () { PracticeRates = [ 11, 10, 9 ], PracticeAverageRate = (11 + 10 + 9) / (float)3};
 
-            PerformancePractice performancePractice = new () { PracticeRates = [ 11, 10, 9 ], PracticeAverageRate = (11 + 10 + 9) / 3};
+            PerformanceExam performanceExam = new () { ExamRates = [ 12, 11, 11 ], ExamAverageRate = (12 + 11 + 11) / (float)3 };
 
-            PerformanceExam performanceExam = new () { ExamRates = [ 12, 11, 11 ], ExamAverageRate = (12 + 11 + 11) / 3};
-
-            PerformanceZachet performanceZachet = new () { ZachetRates = [ 12, 12, 11 ], ZachetCount = 3, ZachetAverageRate = (12 + 12 + 11) / 3 };
+            PerformanceZachet performanceZachet = new () { ZachetRates = [ 12, 12, 11 ], ZachetCount = 3, ZachetAverageRate = (12 + 12 + 11) / (float)3 };
 
             Performance performance = new () { PerformanceHomeWorks = performanceHomeworks, PerformancePractice = performancePractice, 
                 PerformanceExam = performanceExam, PerformanceZachet = performanceZachet, TotalAverageRate = (performanceHomeworks.DzAverageRate + 
-                performancePractice.PracticeAverageRate + performanceExam.ExamAverageRate + performanceZachet.ZachetAverageRate) / 4 };
+                performancePractice.PracticeAverageRate + performanceExam.ExamAverageRate + performanceZachet.ZachetAverageRate) / (float)4 };
 
             Student student = new () { FirstName = "Иванов", Surname = "Иван", Lastname = "Иванович", DateOfBirth = new DateOnly(2001, 01, 01), 
                 HomeAddress = address, Group = group, Performance = performance};
@@ -137,14 +138,14 @@
             Console.WriteLine("Дисциплина: \t" + group.Discipline?.SubjectName);
             Console.WriteLine("Преподователь: \t" + group.Discipline?.TeacherName);
             Console.WriteLine("Посещаемость:");
-            Console.WriteLine("\tПосещено занятий: \t" + attendance.LessonsVisited);
-            Console.WriteLine("\tОпозданий: \t\t" + attendance.LessonsLate);
+            Console.WriteLine("\tПосещено занятий: \t" + group.Discipline?.Attendance.LessonsVisited);
+            Console.WriteLine("\tОпозданий: \t\t" + group.Discipline?.Attendance.LessonsLate);
             Console.WriteLine("Успеваемость: ");
-            Console.WriteLine("\tДомашние задания: \t" + performanceHomeworks.DzAverageRate);
-            Console.WriteLine("\tПрактика: \t\t" + performancePractice.PracticeAverageRate);
-            Console.WriteLine("\tЭкзамены: \t\t" + performanceExam.ExamAverageRate);
-            Console.WriteLine("\tЗачеты: \t\t" + performanceZachet.ZachetAverageRate);
-            Console.WriteLine("\tОбщий Средний балл: \t" + performance.TotalAverageRate);
+            Console.WriteLine("\tДомашние задания: \t" + student.Performance.PerformanceHomeWorks.DzAverageRate);
+            Console.WriteLine("\tПрактика: \t\t" + student.Performance.PerformancePractice.PracticeAverageRate);
+            Console.WriteLine("\tЭкзамены: \t\t" + student.Performance.PerformanceExam.ExamAverageRate);
+            Console.WriteLine("\tЗачеты: \t\t" + student.Performance.PerformanceZachet.ZachetAverageRate);
+            Console.WriteLine("\tОбщий Средний балл: \t" + student.Performance.TotalAverageRate);
         }    
     }
 }
