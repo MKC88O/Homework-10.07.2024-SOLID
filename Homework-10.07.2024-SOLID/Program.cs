@@ -172,10 +172,10 @@
                 Console.Write(current + " ");
             }
             Console.WriteLine("\tСредний балл: " + Math.Round(student.Performance.PerformanceZachet.ZachetRates.Average(), 2));
-            
-            double TotalAverageRate = (student.Performance.PerformanceHomeWorks.DzRates.Average() + student.Performance.PerformancePractice.PracticeRates.Average() +
+
+            performance.TotalAverageRate = (student.Performance.PerformanceHomeWorks.DzRates.Average() + student.Performance.PerformancePractice.PracticeRates.Average() +
                 student.Performance.PerformanceExam.ExamRates.Average() + student.Performance.PerformanceZachet.ZachetRates.Average()) / 4;
-            Console.WriteLine("\tОбщий Средний балл: \t" + Math.Round(TotalAverageRate, 2));
+            Console.WriteLine("\tОбщий Средний балл: \t" + Math.Round(performance.TotalAverageRate, 2));
         }    
     }
 }
