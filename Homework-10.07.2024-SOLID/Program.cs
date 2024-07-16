@@ -121,7 +121,8 @@
             PerformanceZachet performanceZachet = new () { ZachetRates = [ 12, 12, 11]};
 
             Performance performance = new () { PerformanceHomeWorks = performanceHomeworks, PerformancePractice = performancePractice, 
-                PerformanceExam = performanceExam, PerformanceZachet = performanceZachet};
+                PerformanceExam = performanceExam, PerformanceZachet = performanceZachet, TotalAverageRate = (performanceHomeworks.DzRates.Average() + 
+                performancePractice.PracticeRates.Average() + performanceExam.ExamRates.Average() + performanceZachet.ZachetRates.Average()) / 4};
 
             StudentOtherInfo studentOtherInfo = new() { HomeAddress = address, ZnakZodiaka = "Скорпион" };
 
@@ -173,8 +174,6 @@
             }
             Console.WriteLine("\tСредний балл: " + Math.Round(student.Performance.PerformanceZachet.ZachetRates.Average(), 2));
 
-            performance.TotalAverageRate = (student.Performance.PerformanceHomeWorks.DzRates.Average() + student.Performance.PerformancePractice.PracticeRates.Average() +
-                student.Performance.PerformanceExam.ExamRates.Average() + student.Performance.PerformanceZachet.ZachetRates.Average()) / 4;
             Console.WriteLine("\tОбщий Средний балл: \t" + Math.Round(performance.TotalAverageRate, 2));
         }    
     }
